@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/signupAndLogin_img/">
+
+    <link rel="shortcut icon" href="cslogo5.png" type="image/x-icon">
+    
+    <title>Career Spark | Sign Up</title>
+    <style>
+        body {
+            background: url(job_list.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position:0px 5px;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #f0f0f0;
+    
+}
+
+.container {
+    max-width: 300px;
+    width: 300px;
+    margin: 0 auto;
+    padding-top: 10vh;
+    display: grid;
+    justify-content: center;
+}
+
+#signupForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px #000;
+}
+
+#signupForm h2 {
+    text-align: center;
+}
+#signupForm input, #signupForm button {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 0px;
+    border-bottom: 1px solid;
+    border-radius: 0.2rem;
+    
+}
+#signupForm input{
+    margin-bottom: 0.8rem;
+}
+#signupForm select{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    width: 98%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+#signupForm>button {
+    border-radius: 1.8rem;
+    position: relative;
+    
+    width: max-content;
+    background:#3b3b3b;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.8rem 1rem;
+    border: gray solid 2px;
+}
+#signupForm button:hover{
+    background: rgb(34, 34, 34);
+}
+@media screen and (max-width:768px){
+    body{
+        background: url(signup.jpg);
+        background-position: 0px 50px;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="signupForm" action="/signup" method="POST">
+            <h2>Sign Up with Career Spark!</h2>
+            <div id="g_id_onload"
+     data-client_id="<%= process.env.CLIENT_ID %>"
+     data-ux_mode="redirect"
+     data-login_uri="<%= process.env.CLIENT_URL %>"
+     data-scope="profile email">
+</div>
+
+            <div class="g_id_signin" data-type="standard"></div>
+            <p style="font-weight: 900;font-size: 1rem;text-align: center;">OR</p>
+            <input type="text" name="username" id="username" placeholder="Username" required>
+            <input type="email" name="email" id="email" placeholder="Email" required>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <input type="password" name="confirmPassword" id="confirm-password" placeholder="Confirm Password" required>
+          
+            <select name="role" id="role" required>
+              <option value="">Select Role</option>
+              <option value="job seeker">Job Seeker</option>
+              <option value="employer">Employer</option>
+            </select>
+            <!-- Rendering the personalized sign-in button and One Tap popup -->
+            <button type="submit">Sign Up</button>
+            <br>
+            <small>Already Have an Account? <a href="/login">Login Now!</a></small>
+          </form>
+    </div>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+</body>
+</html>
+

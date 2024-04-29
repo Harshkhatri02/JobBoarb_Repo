@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Dashboard</title>
+    <base href="/index_img/">
+    <link rel="shortcut icon" href="cslogo5.png" type="image/x-icon">
+    <style>
+        
+        /* WebKit browsers */
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            border-bottom-left-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+        html,body{
+    height: 100%;
+    width: 100%;
+}
+::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 1rem;
+}
+
+        body {
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f2f7; /* Light purple background */
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+        
+        header {
+            box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background:#3b3b3b;
+            color: white;
+            padding-top: 20px;
+            min-height: 9vh;
+            height: 12.5vh;
+            border-bottom: #ffffff8e 3px solid; 
+        }
+        
+        header a {
+            background-color:rgb(238, 238, 238);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+            display: inline-block;
+            border: 2px solid transparent;
+            border-color: #ddd; 
+            border-radius: 1.5rem;
+            padding: 10px 15px;
+            transition: background-color 0.3s, border-color 0.3s;
+            box-shadow:inset -2px -7px 10px rgba(15, 15, 15, 0.2); 
+        }
+        header a:hover {
+            border-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+  background-color: rgba(255, 255, 255, 0.3); /* Transparent white */
+}
+header ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        header li {
+            float: left;
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+        .active{
+            padding: 0.5rem;
+            background-color: #3b3b3b;
+            position: absolute;
+            top: 80px;
+            left: 0;
+            z-index: -1;
+            opacity: 0.98;
+            display: grid;
+            width:99%;
+        }
+        header svg{
+            display: none;
+        }
+        header #branding {
+            float: left;
+            display: grid;
+            grid-template-columns: 0.5fr 1fr;
+            column-gap: 0.2rem;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        #branding img{
+            position: absolute;
+            top: 2px;
+            height: 4.8rem;
+            width: 4.8rem;
+        }
+        header nav {
+            float: right;
+        }
+        .highlight, header .current a {
+            color: #fdcb6e; /* Yellow highlight for contrast */
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(253, 203, 110, 0.7), /* Glowing effect */
+                         0 0 20px rgba(253, 203, 110, 0.5), /* Glowing effect */
+                         0 0 30px rgba(253, 203, 110, 0.3), /* Glowing effect */
+                         0 0 40px rgba(253, 203, 110, 0.2), /* Glowing effect */
+                         0 0 50px rgba(253, 203, 110, 0.1); /* Glowing effect */
+            
+        }
+        header a {
+            color: #3b3b3b;
+            font-weight: bold;
+            border-top: 0px solid;
+            border-bottom: 3.5px solid rgba(228, 148, 0, 0.196);
+        }
+        header a:hover {
+            color: #ffffff; /* Light grey for hover state */
+
+        }
+        #showcase {
+            margin-top: 4rem;
+            padding-top: 200px;
+            min-height: 400px;
+            overflow-y: scroll;
+            background: url(job_listing.jpg) no-repeat;
+            background-size:100%;
+            background-position:center;
+            background-size:cover;
+            height: 98vh;
+
+            background-color: #3b3b3b54;
+            text-align: center;
+            color:rgb(255, 255, 255);
+        }
+        #showcase h1, #showcase p {
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7),
+                 0 0 20px rgba(0, 0, 0, 0.5),
+                 0 0 30px rgba(0, 0, 0, 0.3),
+                 0 0 40px rgba(0, 0, 0, 0.2),
+                 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
+        #showcase h1 {
+            margin-top: 100px;
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+        #showcase p {
+            font-size: 20px;
+        }
+
+        /* Container styles */
+#newsletter {
+    padding-top: 1rem;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+#newsletter .container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Header styles */
+#newsletter h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+/* Job listing styles */
+.job-listing {
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+.job-listing:hover{
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.job-listing h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.job-listing p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 0;
+}
+
+
+
+footer {
+    background-color:#3b3b3b;
+    padding: 20px;
+    font-size: 14px;
+}
+footer *{
+    color:#f8f9fa;
+    text-decoration: none;
+    list-style:none;
+    padding: 0.2rem;
+}
+footer form input{
+    color: black;
+}
+
+footer form input:focus {
+  border: 0.005px solid black; /* Light border color */
+}
+footer form button,input{
+    border: 1.5px solid gray;
+
+    padding: 0.5rem;
+    border-radius: 0.8rem;
+
+}
+footer form button{
+    background-color:#ab8642;
+    border-radius: 0.8rem;
+    border: 1.5px solid gray;
+    box-shadow:inset -2px -7px 10px rgba(15, 15, 15, 0.2); 
+    transition: 0.3s ease-in all;
+    cursor: pointer;
+}
+footer form button:hover{
+    background-color:#ac7a1f;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.company-container{
+    display: flex;
+    align-items: center;
+}
+footer a:hover{
+    color: #fdcb6e;
+}
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-left, .footer-right {
+    flex: 1;
+}
+
+.footer-left img {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.footer-left form {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.footer-left form input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.footer-right {
+    display: flex;
+    justify-content: space-between;
+}
+
+.about-us, .services, .follow-us {
+    flex: 1;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #dee2e6;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.footer-bottom ul {
+    display: flex;
+    gap: 10px;
+}
+
+/* Till 768px for small and mid range devices */
+@media screen and (max-width:768px){
+    
+    nav{
+        display: none;
+    }
+    header svg{
+        position: absolute;
+        right: 20px;
+        display: flex;
+        cursor: pointer;
+    }
+    
+    nav ul li{
+        display: flex;
+        justify-content:end;
+        align-items: center; /* Vertically center items */
+        margin-bottom: 0.5rem;
+    }
+    
+
+
+    
+    .footer-container {
+        flex-direction: column;
+    }
+
+    .footer-right {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-us, .services, .follow-us {
+        margin-bottom: 20px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-bottom ul {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+/* For the deivces from mid to max range */
+@media (min-width:989px) and (max-width:1115px){
+    nav ul li{
+        padding: 0 5px 0 5px;
+
+    }
+}
+@media (min-width:769px) and (max-width:988px){
+    nav ul li{
+        font-size: 14px;
+        padding: 0 1.5px 0 1.5px;
+    }
+    nav a{
+        padding: 7px 10px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header tag for Head contents -->
+    <header>
+        <!-- center the elements -->
+        <div class="container" >
+            <!-- In branding logo and Brand name is present -->
+            <div id="branding" >
+                <div class="logo">
+
+                    <img src="cslogo5.png" alt="" >
+                </div>
+                <div class="b-name">
+
+                    <h1>Career<span class="highlight"> Spark</span></h1>
+                </div>
+
+            </div>
+            <!-- Nav has lists with a tag capabilities to move to pages -->
+            <nav>
+                <ul>
+                    <li ><a href="/home">Job Dashboard</a></li>
+                    <li><a href="/job-listings">Job Listings</a></li>
+                    <%if(session.signedUp||session.loggedIn){%>
+                        <%if(session.userData.role==='employer'){%>
+                    <li><a href="/employer-dashboard">Employer Info</a></li>
+                    <%}else{%>
+                        <li><a href="/profile">Profile</a></li>
+                        <%}%>
+                    <%}else{%>
+                        <li><a onclick="alert('Please Create Account Or Login Existing Account For Account Management')">Manage Account</a></li>
+                        <%}%>
+                    <!-- <li><a href="services.html">Services</a></li> -->
+                    <%if(!(session.signedUp||session.loggedIn)){%>
+                    <li><a href="/signup">SignUp/Login</a></li>
+                    <%}%>
+                </ul>
+            </nav>
+            <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 24 24" onclick="showNav()"><g fill="none" stroke="currentColor" stroke-dasharray="24" stroke-dashoffset="24" stroke-linecap="round" stroke-width="2"><path d="M5 5H19"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="24;0"/></path><path d="M5 12H19"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.2s" dur="0.2s" values="24;0"/></path><path d="M5 19H19"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.2s" values="24;0"/></path></g></svg>
+        </div>
+    </header>
+
+    <section id="showcase">
+        <!-- center the elements -->
+        <div class="container">
+            <%if(session.signedUp||session.loggedIn){%>
+                <%if(session.userData.role==='job seeker'){%>
+                <h1>Welcome <span style="color: #ffbf49;"><%= session.userData.username%> </span>to <span style="color: #fdcb6ee7;">Job Dashboard!</span></h1>
+                <p style="text-decoration: underline;cursor: pointer;" onclick="scrollToTop()">Find Your Dream Job Here!</p>
+                <%}else{%>
+                    <h1>Welcome <span style="color: #ffbf49;"><%= session.userData.username%> </span>to <span style="color: #fdcb6ee7;">Job Dashboard!</span></h1>
+                <p style="text-decoration: underline;cursor: pointer;" onclick="scrollToTop()">Find Your Next Great Employee!</p>
+                <%}%>
+            <%}else{%>
+                <h1>Welcome to <span style="color: #ffbf49;">Job Dashboard</span></h1>
+                <p style="text-decoration: underline;cursor: pointer;" onclick="scrollToTop()">Explore Opportunities and Find Your Next Great Match!</p>
+        
+            <%}%>
+            
+        </div>
+    </section>
+
+    <!-- Divs for the Featured newsletters -->
+    <section id="newsletter">
+        <!-- Already made container that centers the elements -->
+        <div class="container">
+            <h1>Featured Jobs</h1>
+            <!-- Listing of jobs with same class name -->
+            <div class="job-listing">
+                <h3>Software Engineer</h3>
+                <p>We are looking for a skilled software engineer to join our team...</p>
+            </div>
+            <div class="job-listing">
+                <h3>Marketing Specialist</h3>
+                <p>Join our marketing team and help us reach new audiences...</p>
+            </div>
+            <div class="job-listing">
+                <h3>Graphic Designer</h3>
+                <p>Create stunning visuals and graphics for our brand...</p>
+            </div>
+            <div class="job-listing">
+                <h3>Data Analyst</h3>
+                <p>Use your analytical skills to derive insights from data...</p>
+            </div>
+            <div class="job-listing">
+                <h3>Customer Support Representative</h3>
+                <p>Provide exceptional customer support and resolve issues...</p>
+            </div>
+            <div class="job-listing">
+                <h3>Project Manager</h3>
+                <p>Lead and manage projects from conception to completion...</p>
+            </div>
+            
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="company-container">
+                    <img src="cslogo5.png" alt="Logo">
+                    <h1>Career<span class="highlight"> Spark</span></h1>
+                    
+                </div>
+                <p>Stay up to date on our latest features and releases by joining our newsletter.</p>
+                <form>
+                    <input type="email" placeholder="Email Address">
+                    <button type="submit">Subscribe</button>
+                </form>
+                <!-- <p>By subscribing you agree to our <a href="#">Privacy Policy</a> and consent to receive updates from our company.</p> -->
+            </div>
+            <div class="footer-right">
+                <div class="about-us">
+                    <h3>About Us</h3>
+                    <ul>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="services">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Feature One</a></li>
+                        <li><a href="#">Feature Two</a></li>
+                        <li><a href="#">Feature Three</a></li>
+                        <li><a href="#">Feature Four</a></li>
+                        <li><a href="#">Feature Five</a></li>
+                    </ul>
+                </div>
+                <div class="follow-us">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <!-- <p>© 2024 Career Spark. All rights reserved</p> -->
+            <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms And Conditions</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script>
+        // Used to scroll when a text for Find your job is clicked
+     function scrollToTop() {
+            window.scrollTo({
+                // From top 530 is considered to scroll for scrollbar
+                top: 620,
+                behavior: "smooth"
+            });
+        }
+
+        // Makes the nav bar responsive for max-width 768px which is set in CSS.Onclick event trigger this function
+        function showNav(){
+            const listItemsContainer = document.querySelector("nav");
+            listItemsContainer.classList.toggle("active");
+            const ulTag = document.querySelector("nav ul");
+            ulTag.style.display = 'grid';
+        }
+
+    </script>
+</body>
+</html>

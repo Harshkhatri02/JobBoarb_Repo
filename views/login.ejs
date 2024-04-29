@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com 'nonce-c+ZdXVJCjAcUmnPSsGE6Fw=='"> -->
+    <!-- <meta name="google-signin-client_id" content="696854257015-3luv6kf93ov5g3ak20a7jsi15idsfgtg.apps.googleusercontent.com"> -->
+    <title>Career Spark | Login Now</title>
+    <base href="/signupAndLogin_img/">
+    <link rel="shortcut icon" href="cslogo5.png" type="image/x-icon">
+    <style>
+        body {
+            background: url(job_list.jpg);
+            background-repeat: no-repeat;
+            background-position: 0px 5px;
+            background-size: cover;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            width: 300px;
+            margin: 45px auto 0;
+            padding-top: 100px;
+            display: grid;
+            justify-content: center;
+        }
+
+        #loginForm {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px #000;
+            position: relative;
+        }
+
+        #loginForm h2 {
+            text-align: center;
+        }
+
+        #loginForm input,
+        #loginForm button {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 0px;
+            border-bottom: 1px solid;
+            border-radius: 0.2rem;
+        }
+
+        #loginForm input {
+            margin-bottom: 1rem;
+        }
+
+        #loginForm button {
+            border: gray solid 2px;
+            border-radius: 1.2rem;
+            position: relative;
+            width: max-content;
+            background: #3b3b3b;
+            color: #fff;
+            cursor: pointer;
+            padding: 0.6rem 1rem;
+            box-shadow: inset -2px -7px 10px rgba(15, 15, 15, 0.2);
+        }
+
+        #loginForm button:hover {
+            background: rgb(34, 34, 34);
+        }
+
+        .back-to-login {
+            cursor: pointer;
+            position: absolute;
+            left: 5px;
+            top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                background: url(signup.jpg);
+                background-position: 0px 50px;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="loginForm">
+            <div class="back-to-login" id="backButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24"><path fill="currentColor" d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64"/></svg>
+                <small style="font-size: medium;">Back</small>
+            </div>
+            <h2>Login with Career Spark!</h2>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p style="font-size: small;">Login with Google:</p>
+            <!-- Rendering the personalized sign-in button and One Tap popup -->
+            <div id="g_id_onload"
+     data-client_id="<%= process.env.CLIENT_ID %>"
+     data-ux_mode="redirect"
+     data-login_uri="<%= process.env.CLIENT_URL %>"
+     data-scope="profile email">
+</div>
+
+        </div>
+            <div class="g_id_signin" data-type="standard"></div>
+        </form>
+    </div>
+    <script >
+        document.getElementById("loginForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch("/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!response.ok) {
+                    throw new Error("Invalid email or password");
+                }
+
+                // Redirect to the home page
+                window.location.href = "/home";
+            } catch (error) {
+                console.error("Login error:", error.message);
+                // Handle the error (e.g., display an error message to the user)
+            }
+        });
+        
+        
+
+        document.getElementById("backButton").addEventListener("click", function() {
+            goBack();
+        });
+
+        function goBack() {
+            fetch('/goback')
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+            
+            
+            function onSignIn(response) {
+//                 const id_token = googleUser.getAuthResponse().id_token;
+//   fetch('/login', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ id_token, googleSignIn: true })
+//   })
+//   .then(response => {
+//     if (response.redirected) {
+//       window.location.href = response.url; // Redirect to the redirected URL (e.g., "/home")
+//     }
+//   });
+            }
+            </script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+</html>
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sign-In Migration</title>
+</head>
+<body>
+ 
+
+<script>
+    // Handle sign-in response
+
+
+    </script>
+</body>
+</html> -->
+

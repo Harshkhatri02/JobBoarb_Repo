@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Dashboard</title>
+    <base href="/employerdashboard_img/">
+    <link rel="shortcut icon" href="cslogo5.png" type="image/x-icon">
+    <style>
+
+         /* WebKit browsers */
+         *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            border-bottom-left-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+        html,body{
+    height: 100%;
+    width: 100%;
+}
+::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 1rem;
+}
+
+        body {
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f2f7; /* Light purple background */
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            z-index: +1;
+            box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background:#3b3b3b;
+            color: white;
+            padding-top: 20px;
+            min-height: 9vh;
+            height: 12.5vh;
+            border-bottom: #ffffff8e 3px solid; 
+        }
+        
+        header a {
+            background-color:rgb(238, 238, 238);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+            display: inline-block;
+            border: 2px solid transparent;
+            border-color: #ddd; 
+            border-radius: 1.5rem;
+            padding: 10px 15px;
+            transition: background-color 0.3s, border-color 0.3s;
+            box-shadow:inset -2px -7px 10px rgba(15, 15, 15, 0.2); 
+        }
+        header a:hover {
+            border-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+  background-color: rgba(255, 255, 255, 0.3); /* Transparent white */
+}
+header ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        header li {
+            float: left;
+            display: inline;
+            padding: 0 20px 0 20px;
+            
+        }
+        .active{
+            padding: 0.5rem;
+            background-color: #3b3b3b;
+            position: absolute;
+            top: 80px;
+            left: 0;
+            z-index: -1;
+            opacity: 0.98;
+            display: grid;
+            width:99%;
+        }
+        header svg{
+            display: none;
+        }
+        header #branding {
+            float: left;
+            display: grid;
+            grid-template-columns: 0.5fr 1fr;
+            column-gap: 0.2rem;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        #branding img{
+            position: absolute;
+            top: 2px;
+            height: 4.8rem;
+            width: 4.8rem;
+        }
+        header nav {
+            float: right;
+        }
+        .highlight, header .current a {
+            color: #fdcb6e; /* Yellow highlight for contrast */
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(253, 203, 110, 0.7), /* Glowing effect */
+                         0 0 20px rgba(253, 203, 110, 0.5), /* Glowing effect */
+                         0 0 30px rgba(253, 203, 110, 0.3), /* Glowing effect */
+                         0 0 40px rgba(253, 203, 110, 0.2), /* Glowing effect */
+                         0 0 50px rgba(253, 203, 110, 0.1); /* Glowing effect */
+            
+        }
+        header a {
+            color: #3b3b3b;
+            font-weight: bold;
+            border-top: 0px solid;
+            border-bottom: 3.5px solid rgba(228, 148, 0, 0.196);
+        }
+        header a:hover {
+            color: #ffffff; /* Light grey for hover state */
+
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        /* header {
+            position:fixed;
+            top: 0;
+            z-index: +1;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        } */
+        .dashboard {
+            margin-top: 7rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .sidebar {
+            width: 20%;
+            background-color: #f0f0f4;
+            padding: 10px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+        .main {
+            width: 75%;
+            padding: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar li a {
+            display: block;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+        .sidebar li a:hover {
+            background-color: #ddd;
+        }
+
+
+        /* 
+            My css for form
+        */
+
+
+
+form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+form label {
+  font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form textarea,form input[type="number"] {
+    border: 1.5px solid;
+    border-radius: 0.3rem;
+    display: block;
+  width: 60%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+form input[type=submit]{
+    transition: 0.2s ease-in all;
+    background-color: #535353;
+    color: white;
+    border: 2px solid;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.8rem;
+}
+form input[type=submit]:hover{
+    background-color: #313131;
+}
+
+#jobPostingForm input[type="submit"]{
+    border: 1.5px solid;
+    border-radius: 0.3rem;
+    display: block;
+  width: 20%;
+}
+
+output {
+  display: block;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+
+#successMessage {
+  display: none;
+  color: green;
+  text-align: center;
+  margin-top: 50px;
+  font-size: 2rem;
+}
+        /* end of form css */
+        @media screen and (max-width: 768px) {
+    nav{
+        display: none;
+    }
+    header svg{
+        position: absolute;
+        right: 20px;
+        display: flex;
+        cursor: pointer;
+    }
+    
+    nav ul li{
+        display: flex;
+        justify-content:end;
+        float: right;
+        margin-bottom: 0.5rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+        <header>
+            <!-- center the elements -->
+            <div class="container" >
+                <!-- In branding logo and Brand name is present -->
+                <div id="branding" >
+                    <div class="logo">
+    
+                        <img src="cslogo5.png" alt="" >
+                    </div>
+                    <div class="b-name">
+    
+                        <h1>Career<span class="highlight"> Spark</span></h1>
+                    </div>
+    
+                </div>
+                <!-- Nav has lists with a tag capabilities to move to pages -->
+                <nav>
+                    <ul>
+                        
+                        <li ><a href="/home">Job Dashboard</a></li>
+                        <li><a href="/job-listings">Job Listings</a></li>
+                        <%if(session.signedUp||session.loggedIn){%>
+                            <%if(session.userData.role==='employer'){%>
+                        <li><a href="/employer-dashboard">Employer Info</a></li>
+                        <%}else{%>
+                            <li><a href="/profile">Profile</a></li>
+                            <%}%>
+                        <%}else{%>
+                            <li><a onclick="alert('Please Create Account For Account Management')">Manage Account</a></li>
+                            <%}%>
+                        <!-- <li><a href="services.html">Services</a></li> -->
+                        <%if(!(session.signedUp||session.loggedIn)){%>
+                        <li><a href="/signup">SignUp/Login</a></li>
+                        <%}%>
+                    </ul>
+                </nav>
+                <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 24 24" onclick="showNav()"><g fill="none" stroke="currentColor" stroke-dasharray="24" stroke-dashoffset="24" stroke-linecap="round" stroke-width="2"><path d="M5 5H19"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="24;0"/></path><path d="M5 12H19"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.2s" dur="0.2s" values="24;0"/></path><path d="M5 19H19"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.2s" values="24;0"/></path></g></svg>
+            </div>
+        </header>
+    
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2>Menu</h2><br>
+            <ul>
+                <li><a  onclick="showContent('account')">Account Management</a></li>
+                <li><a  onclick="showContent('post')">Post a Job</a></li>
+                <li><a  onclick="showContent('manage')">Manage Jobs</a></li>
+            </ul>
+        </div>
+        <div class="main" id="main-content">
+            <h2>Welcome, [Employer Name]</h2><br>
+            <p>Here you can manage your account and job postings.</p>
+        </div>
+    </div>
+    <script>
+      
+
+        function showNav(){
+            const listItemsContainer = document.querySelector("nav");
+            listItemsContainer.classList.toggle("active");
+            const ulTag = document.querySelector("nav ul");
+            ulTag.style.display = 'grid';
+        }
+        
+        // Client-side JavaScript for dynamic content
+        function showContent(option) {
+            var mainContent = document.getElementById("main-content");
+            switch (option) {
+                case 'account':
+                    // Employer Account Management
+                    mainContent.innerHTML =`
+                     <h2>Account Management</h2><br>
+                     <form id="account-form" method=post action="/">
+                       <label for="username">Username:</label>
+                       <input type="text" id="username" name="username" required>
+                       <label for="email">Email:</label>
+                       <input type="email" id="email" name="email" required>
+                       <!-- Add other account fields here -->
+                       <input type="submit" value="Update Account">
+                     </form>
+                     <div id="successMessage">Account Updated Successfully!</div>
+                   `;
+                   // Client-side JavaScript
+// Client-side JavaScript
+// Client-side JavaScript
+document.getElementById('account-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const formData = new FormData(this);
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '/update-account');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      const successMessage = document.getElementById('successMessage');
+      successMessage.style.display = 'block';
+      const form = document.getElementById('account-form');
+      form.style.display = 'none';
+    } else {
+      alert('Failed to update account. Please try again.');
+    }
+  };
+  const data = {
+    username: formData.get('username'),
+    email: formData.get('email')
+    // Add other fields as needed
+  };
+  xhr.send(JSON.stringify(data));
+});
+
+
+
+// document.getElementById('salary').addEventListener('input', function() {
+//   var value = this.value;
+//   var output = document.getElementById('salaryValue');
+//   console.log('$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+//   output.innerHTML = '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// });
+
+      document.getElementById('account-form').onsubmit = updateAccount;
+      break;
+    case 'post':
+      // Post a Job
+      mainContent.innerHTML = `
+      <div class="container">
+  <h1>Post a Job</h1>
+  <form id="jobPostingForm">
+    <label for="jobTitle">Job Title:</label><br>
+    <input type="text" id="jobTitle" name="title" required><br><br>
+    
+    <label for="companyName">Company Name:</label><br>
+    <input type="text" id="companyName" name="companyName" required><br><br>
+    
+    <label for="jobDescription">Job Description:</label><br>
+    <textarea id="jobDescription" name="jobDescription" rows="4" cols="50" required></textarea><br><br>
+    
+    <label for="jobLocation">Job Location:</label><br>
+    <input type="text" id="jobLocation" name="location" required><br><br>
+    
+    <label for="salaryMin">Minimum Salary:</label><br>
+    <input type="number" id="salaryMin" name="salaryMin" min="10000" max="100000" step="1000"><br><br>
+    
+    <label for="salaryMax">Maximum Salary:</label><br>
+    <input type="number" id="salaryMax" name="salaryMax" min="10000" max="100000" step="1000"><br><br>
+    <!-- Add other fields as needed for the company schema -->
+    <label for="companyDescription">Company Description:</label><br>
+    <textarea id="companyDescription" name="companyDescription" rows="4" cols="50"></textarea><br><br>
+    
+    <label for="companyIndustry">Company Industry:</label><br>
+    <input type="text" id="companyIndustry" name="companyIndustry"><br><br>
+    
+    <input type="submit" value="Submit">
+  </form>
+  <div id="successMessage" class='activemessage'>Job Posted Successfully!</div>
+      `;
+    //   document.getElementById('job-form').onsubmit = postJob;
+
+    const jobPostingFormElement = document.getElementById('jobPostingForm');
+  jobPostingFormElement.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const formData = new FormData(jobPostingFormElement);
+    const postData = {};
+    for (const [key, value] of formData.entries()) {
+      postData[key] = value;
+    }
+    try {
+      const response = await fetch('/jobs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('jobPostingForm').style.display = 'none';
+      } else {
+        alert(data.message || 'An error occurred while posting the job.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while posting the job.');
+    }
+  });
+      break;
+    case 'manage':
+      // Manage Posted Jobs
+      mainContent.innerHTML = `
+        <h2>Manage Jobs</h2><br>
+        <div id="jobs-list">
+          <!-- Jobs will be listed here -->
+        </div>
+      `;
+      async function loadJobs() {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/employer-jobs');
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        const jobs = JSON.parse(xhr.responseText);
+        resolve(jobs);
+      } else {
+        reject(new Error('Failed to load jobs'));
+      }
+    };
+    xhr.send();
+  });
+}
+
+// Call loadJobs and handle the response
+async function displayJobs() {
+  try {
+    const jobs = await loadJobs();
+    const jobsList = document.getElementById('jobs-list');
+    jobsList.innerHTML = ''; // Clear previous jobs
+    jobs.forEach(job => {
+      const jobItem = document.createElement('div');
+      jobItem.classList.add('job-item');
+      jobItem.innerHTML = `
+        <h3>${job.title}</h3>
+        <p>${job.jobDescription}</p>
+        <p>Location: ${job.location}</p>
+        <p>Salary: $${job.salaryMin} - $${job.salaryMax}</p><br>
+      `;
+      jobsList.appendChild(jobItem);
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+// Call displayJobs when the page is loaded
+  displayJobs();
+
+      break;
+  }
+}
+
+
+// Function to update account details
+function updateAccount(event) {
+  event.preventDefault();
+  // Gather form data and send update request to server
+  // ...
+}
+
+// Function to post a new job
+function postJob(event) {
+  event.preventDefault();
+  // Gather form data and send post request to server
+  // ...
+}
+
+// Function to load and display jobs for management
+function loadJobs() {
+  // Fetch jobs from server and display them
+  // ...
+}
+
+        // function showContent(option) {
+        //     var mainContent = document.getElementById("main-content");
+        //     if (option === 'account') {
+        //         mainContent.innerHTML = '<h2>Account Management</h2><p>Here you can manage your account details.</p>';
+        //     } else if (option === 'post') {
+        //         mainContent.innerHTML = '<h2>Post a Job</h2><p>Here you can post a new job opening.</p>';
+        //     } else if (option === 'manage') {
+        //         mainContent.innerHTML = '<h2>Manage Jobs</h2><p>Here you can manage your job postings.</p>';
+        //     }
+        // }
+    </script>
+</body>
+</html>
+
