@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Job Details</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  display: border-box;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  position: relative;
+  display: grid;
+  padding: 3rem 4rem;
+  /* justify-content:; */
+}
+.back-to-login {
+            cursor: pointer;
+            position: absolute;
+            left: 7px;
+            top: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+
+
+h1, h2 {
+  color: #333;
+}
+
+p {
+  color: #666;
+}
+
+.job-details {
+  margin-top: 20px;
+}
+
+.apply-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.apply-form {
+  display: none;
+  margin-top: 20px;
+}
+
+.apply-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.apply-form input[type="text"],
+.apply-form input[type="file"],
+.apply-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.apply-form input[type="submit"] {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.apply-form input[type="submit"]:hover {
+  background-color: #218838;
+}
+
+.apply-form textarea {
+  resize: vertical;
+}
+
+.apply-form input[type="file"] {
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+      <div class="back-to-login" id="backButton">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24"><path fill="currentColor" d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64"/></svg>
+          <small style="font-size: medium;">Back</small>
+      </div>
+    <h1>Job Details</h1>
+    <div class="job-details">
+      <h2><%= job.title %></h2>
+      <p><strong>Description:</strong> <%= job.jobDescription %></p>
+      <p><strong>Location:</strong> <%= job.location %></p>
+      <p><strong>Salary Range:</strong> $<%= job.salaryMin %> - $<%= job.salaryMax %></p>
+
+      <p><strong>Company:</strong></p>
+<ul>
+  <li><strong>Name:</strong> <%= job.company.name %></li>
+  <li><strong>Description:</strong> <%= job.company.description %></li>
+  <li><strong>Industry:</strong> <%= job.company.industry %></li>
+ 
+</ul>
+
+      <!-- Add other fields as needed -->
+      <button class="apply-button" onclick="showApplyForm()">Apply for Job</button>
+      <form class="apply-form" id="applyForm" method="post" action="/apply">
+        <label for="resumeUrl">Resume URL:</label>
+        <input type="text" id="resumeUrl" name="resumeUrl" required>
+        <label for="coverLetter">Cover Letter:</label>
+        <textarea id="coverLetter" name="coverLetter" rows="4" required></textarea>
+        <input type="hidden" name="jobId" value="<%= job._id %>">
+        <input type="submit" value="Submit Application">
+      </form>
+    </div>
+  </div>
+  <script>
+    function showApplyForm() {
+      document.querySelector('.apply-form').style.display = 'block';
+    }
+
+    document.getElementById("backButton").addEventListener("click", function() {
+            goBack();
+        });
+
+        function goBack() {
+            fetch('/goback')
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+  </script>
+</body>
+</html>

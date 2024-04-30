@@ -309,6 +309,7 @@ output {
                 <li><a  onclick="showContent('account')">Account Management</a></li>
                 <li><a  onclick="showContent('post')">Post a Job</a></li>
                 <li><a  onclick="showContent('manage')">Manage Jobs</a></li>
+                <li><a  onclick="showContent('applications')">Applications For Jobs</a></li>
             </ul>
         </div>
         <div class="main" id="main-content">
@@ -497,6 +498,42 @@ async function displayJobs() {
   displayJobs();
 
       break;
+      case 'applications':
+        mainContent.innerHTML = `
+        <div id='application-list'></div>`;
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', '/applications', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      const applications = JSON.parse(xhr.responseText);
+      const applicationList = document.getElementById('application-list');
+      applicationList.innerHTML = ''; // Clear existing content
+      applications.forEach(application => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <strong>Job Title:</strong> ${application.job.title}<br>
+          <strong>Candidate:</strong> ${application.candidate.username}<br>
+          <strong>Status:</strong> ${application.status}<br>
+          <button class="view-application" data-application-id="${application._id}">View Application</button>
+        `;
+        applicationList.appendChild(listItem);
+      });
+      // Add event listeners for the 'View Application' buttons
+      document.querySelectorAll('.view-application').forEach(button => {
+        button.addEventListener('click', function() {
+          const applicationId = this.dataset.applicationId;
+          // Perform another XHR request to fetch and display the detailed application information
+          // You can use a similar approach as in the 'account' case to handle this
+        });
+      });
+    } else {
+      alert('Failed to fetch applications. Please try again.');
+    }
+  };
+  xhr.send();
+  break;
+
   }
 }
 

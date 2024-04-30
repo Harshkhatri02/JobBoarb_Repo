@@ -37,6 +37,7 @@ html,body{
             width: 90%;
             margin: auto;
             overflow: hidden;
+            
         }
         header {
             z-index: +1;
@@ -311,6 +312,9 @@ header ul {
             padding: 20px;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         }
+        .job-card h2{
+            margin-bottom: 0.5rem;
+        }
         .head-for-job{
             margin-top: 1rem;
             display: grid;
@@ -339,7 +343,26 @@ header ul {
             padding: 10px;
             box-sizing: border-box;
         }
-        
+        .job-card{
+            position: relative;
+        }
+        .job-card a{
+            color: rgb(82, 82, 255);
+            text-decoration: none;
+        }
+        .job-card a:hover{
+            color: rgb(2, 2, 203);
+            font-weight: 700;
+
+        }
+        .job-card a::after{
+            content: '>';
+        }
+        .btn-primary{
+    position: absolute;
+    right: 3px;
+    bottom: 0px;
+}
         .head-for-job h1{
             font-weight: 900;
             text-align: center;
@@ -608,17 +631,7 @@ footer form input:focus {
                 </div>
                 <div class="container" id="jobContainer">
                     <!-- Job listings will be dynamically added here -->
-                </div>
-            
-                <!-- <div class="head-for-job">
-                    <h1>
-                        Find  Jobs by Industry or Skills
-                    </h1>
-                </div> -->
-                <div class="container">
-
-
-
+                </div>  
                    
             </section>
          
@@ -722,6 +735,8 @@ function displayJobs(jobs) {
         jobCard.innerHTML = `
             <h2>${job.title}</h2>
             <p>${job.jobDescription}</p>
+      <small><a href="/job-details?id=${job._id}" class="view-details-link">View Details</a></small>
+
         `;
         jobContainer.appendChild(jobCard);
     });
@@ -744,6 +759,7 @@ function searchForJobs(){
       throw new Error('Failed to fetch job data');
     }
     const jobs = await response.json();
+    console.log('client side',jobs);
     displayDefaultJobs(jobs); // Assuming displayJobs is a function to render the jobs
   } catch (error) {
     console.error(error);
@@ -760,7 +776,7 @@ function displayDefaultJobs(jobs) {
     jobCard.innerHTML = `
       <h2>${job.title}</h2>
       <p>${job.jobDescription}</p>
-      <a href="/job-details?id=${job._id}" class="view-details-link">View Details</a>
+      <a href="/job-detail/${job._id}" class="btn btn-primary">View Details</a
     `;
     container.appendChild(jobCard);
   });

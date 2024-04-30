@@ -15,21 +15,32 @@ const dbUrl = process.env.DB_CONNECT;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const app = express();
 const axios = require('axios');
-const { User, Job, Application, Company, FeaturedJob, SavedJob, Notification } = require('./schema');
+const { User, Job, Application, Company, FeaturedJob, Notification } = require('./schema');
 
 app.set('view engine', 'ejs');
-
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// My crypto generated secret key for sessions: fafdae1eeb3ae2f685fd8850a09b8695437caa02ee3ea1d203cf4a711c188cc5
 app.use(session({
   secret: secretKey,
   resave: false,
   saveUninitialized: true
 }));
 
+// Go to previous page (USE of Middleware)
+app.use((req, res, next) => {
+  if(req.url==='/login'){
+    next();
+  }else{
+    // Store the current page's URL in the session
+    req.session.redirectUrl = req.session.previousUrl;
+    req.session.previousUrl = req.originalUrl;
+    next();
+
+  }
+});
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -39,16 +50,6 @@ mongoose.connect(dbUrl, {
   console.log("Db Connected Successfully");
 }).catch(err => {
   console.error("Error connecting to database:", err);
-});
-// Go to previous page (USE of Middleware)
-app.use((req, res, next) => {
-  if(req.url==='/login'){
-  next();
-  }
-  // Store the current page's URL in the session
-  req.session.redirectUrl = req.session.previousUrl;
-  req.session.previousUrl = req.originalUrl;
-  next();
 });
 passport.use(new GoogleStrategy({
   clientID: clientId,
@@ -124,47 +125,6 @@ app.post("/auth/google/callback",(req,res)=>{
 
 
 
-    // res.redirect('/select-role');
-    // Make a POST request to your /signup route with the user data
-    
-    // Now that authentication is complete, you can access the user's data from Google
-    // const userData = req.user;
-
-    // Prepare the data to be sent in the POST request
-    // const postData = {
-    //   username: userData.displayName,
-    //   email: userData.email,
-    //   role: req.session.role // Assuming you store the user's selected role in the session
-    //   // You may need to adjust this based on how you store the user's role
-    // };
-
-    // try {
-    //   // Make the POST request to the /signup route
-    //   const response = await axios.post('http://localhost:8000/signup', postData);
-
-    //   // Assuming the signup process is successful, update the session data
-    //   req.session.userData = postData;
-    //   req.session.signedUp = true;
-
-    //   // Render the homepage with the updated session data
-    //   res.render('index.ejs', { userData: req.session.userData });
-    // } catch (error) {
-    //   console.error(error);
-    //   // Handle error appropriately
-    //   res.status(500).send('Internal Server Error');
-    // }
-    
-    // if (req.isAuthenticated()) {
-    //   // If the user is already logged in, render the home page
-    //   const userData = req.user;
-
-    
-    // } else {
-    //   // If the user is not logged in, render the role selection page
-    //   res.render('role.ejs', { session: req.session });
-    // }
-    // console.log('redirect and previous',req.session.redirectUrl,req.session.previousUrl); 
-
   });
 
   app.get('/select-role',(req,res)=>{
@@ -189,7 +149,47 @@ app.post("/auth/google/callback",(req,res)=>{
   })
 
 
+  app.get('/logout', (req, res) => {
+    // Destroy the session
+    req.session.destroy();
   
+    // Revoke Google token
+    if (req.user && req.user.googleAccessToken) {
+      const { google } = require('googleapis');
+      const OAuth2 = google.auth.OAuth2;
+  
+      const oauth2Client = new OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET);
+  
+      oauth2Client.revokeToken(req.user.googleAccessToken, (err, body) => {
+        if (err) {
+          console.error('Failed to revoke Google token:', err);
+        }
+        console.log('Token revoked:', body);
+        res.redirect('/');
+      });
+    } else {
+      // Redirect to home page if no user or token found
+      res.redirect('/');
+    }
+  });
+    
+
+  app.post('/profile', async(req, res) => {
+    // Process the form data
+    const { username, email } = req.body;
+  
+    // Update the session or database with the new username and email
+    const user = await User.findOneAndUpdate({_id:req.session._id},{username,email});
+    req.session.userData.username = username;
+    req.session.userData.email = email;
+  
+    // Redirect back to the profile page
+    res.redirect('/home');
+  });
+  
+  app.get('/profile',(req,res)=>{
+    res.render('profile',{session:req.session});
+  })
 app.get("/login",(req,res)=>{
   res.render('login.ejs');
 })
@@ -202,48 +202,6 @@ console.log("Listening to port http://localhost:8000/login");
 
       
       
-      
-  
-   
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-    
-// app.use((req, res, next) => {
-//     res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}' 'unsafe-inline'`);
-//     next();
-// });
-//       const crypto = require('crypto');
-// const nonce = crypto.randomBytes(16).toString('base64');
-// console.log(nonce);
-
-      // Middleware
-
-// Connect to MongoDB
-
-
-
-
-
-// // Serialize and deserialize user data to store/retrieve from the session
-// passport.serializeUser((user, done) => done(null, user));
-// passport.deserializeUser((obj, done) => done(null, obj));
-
-// app.get('/auth/google',passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-// app.get('/auth/google/callback',
-//   passport.authenticate('google', { failureRedirect: '/signup' }),
-//   (req, res) => {
-//     res.redirect('/');
-//   });
-
-// app.get('/logout', (req, res) => {
-//   req.logout();
-//   res.redirect('/');
-// });
-
-
-
-
 
 // User signup
 app.post('/signup', async(req, res) => {
@@ -284,7 +242,6 @@ app.post('/signup', async(req, res) => {
 //User Login
 app.post("/login",async(req,res)=>{
   const { email, password } = req.body;
-console.log("user data",email,password);
       // Validate the user's credentials
       const user = await User.findOne({ email, password });
       // console.log("user data",user.email,user.password);
@@ -294,10 +251,11 @@ console.log("user data",email,password);
       }
 
       // Store user data in the session
-      req.session.userData = await { username:user.username,email: user.email, role:user.role}; // You can store more user data if needed
+      req.session.userData = user; // You can store more user data if needed
       req.session.loggedIn  = true;
       // Render index.ejs with user data
       res.redirect("/home");
+      // res.render('index.ejs', { session: req.session });
       // res.render('index.ejs', { userData: req.session.userData });
 })
 
@@ -344,7 +302,9 @@ app.post('/users', async (req, res) => {
 // Routes for Jobs
 app.get('/jobs', async (req, res) => {
   try {
-    const jobs = await Job.find().populate('company');
+    const jobs = await Job.find().populate('company', ['name', 'description', 'industry']);
+
+    // const jobs = await Job.find().populate('company');
     res.json(jobs);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -388,7 +348,6 @@ app.get('/employer-jobs', async (req, res) => {
   try {
     // const jobs = await Job.find({ company: req.session.job._id }).populate('company');
     const jobs = await Job.find({ employer:req.session.userData._id });
-    // console.log(jobs);
     res.status(200).json(jobs);
   } catch (error) {
     console.error('Error loading jobs:', error);
@@ -421,12 +380,20 @@ app.post('/update-account',async (req, res) => {
   res.status(200).send('Account updated successfully');
 });
 
+app.get('/job-detail/:id', async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id).populate('company', ['name', 'description', 'industry']);
+    res.render('job-detail', { job });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 
 app.get('/list-jobs', async (req, res) => {
   try {
     const jobs = await Job.find().populate('company', ['name', 'description', 'industry']);
-
     res.json(jobs);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -451,9 +418,16 @@ app.get('/search-jobs', async (req, res) => {
 
 app.post('/apply', async (req, res) => {
   const { jobId, resumeUrl, coverLetter } = req.body;
+  
+  
+  
   const candidateId = req.session.userData._id; // Assuming this is the candidate's ID
 
   try {
+    const user = await Application.findOne({job:jobId}) ;
+    if(user){
+    res.send('<script>alert("You have already applied for the Job! Please for Employer Responser"); window.location.href = "/login";</script>');
+    }
     const application = new Application({
       job: jobId,
       candidate: candidateId,
@@ -462,7 +436,19 @@ app.post('/apply', async (req, res) => {
       status: 'pending'
     });
     await application.save();
-    res.send('Application submitted successfully');
+    res.send('<script>alert("Application Submitted SuccessFully"); window.location.href = "/login";</script>');
+
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get('/applications', async (req, res) => {
+
+  try {
+    const applications = await Application.find().populate('job', 'title').populate('candidate', 'username');;
+    res.status(200).json(applications);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

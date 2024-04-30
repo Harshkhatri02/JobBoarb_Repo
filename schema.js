@@ -1,6 +1,5 @@
 require("dotenv").config();
 const dbUrl = process.env.DB_CONNECT;
-
 const mongoose = require('mongoose');
 mongoose.connect(dbUrl).then(()=>{
   console.log("Db in Schema Connected");
@@ -53,12 +52,7 @@ const userSchema = new mongoose.Schema({
     job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: true },
     // Add other fields as needed
   });
-  //Saved Job Schema
-  const savedJobSchema = new mongoose.Schema({
-    job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: true },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    // Add other fields as needed
-  });
+ 
 
   //Notify by email
   const notificationSchema = new mongoose.Schema({
@@ -75,7 +69,6 @@ const userSchema = new mongoose.Schema({
   const Application = mongoose.model('Application', applicationSchema);
   const Company = mongoose.model('Company', companySchema);
   const FeaturedJob = mongoose.model('FeaturedJob', featuredJobSchema);
-  const SavedJob = mongoose.model('SavedJob', savedJobSchema);
   const Notification = mongoose.model('Notification', notificationSchema);
   
   module.exports = {
@@ -84,7 +77,6 @@ const userSchema = new mongoose.Schema({
     Application,
     Company,
     FeaturedJob,
-    SavedJob,
     Notification,
   };
   
