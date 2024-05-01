@@ -122,9 +122,6 @@ app.post("/auth/google/callback",(req,res)=>{
       });
 
 
-
-
-
   });
 
   app.get('/select-role',(req,res)=>{
@@ -194,10 +191,6 @@ app.get("/login",(req,res)=>{
   res.render('login.ejs');
 })
 
-app.listen(8000,()=>{
-console.log("Listening to port http://localhost:8000/login");
-});
-
 
 
       
@@ -231,13 +224,6 @@ app.post('/signup', async(req, res) => {
   res.render('index.ejs',{session:req.session});
 
 
-  //////////////////////////////////////////////////////////
-  // Assuming validation passes, you can proceed with the signup logic
-  // For simplicity, let's assume the signup process is successful
-
-  // Render the homepage with the username
-  // res.render('index', { username });
-});
 
 //User Login
 app.post("/login",async(req,res)=>{
@@ -255,8 +241,6 @@ app.post("/login",async(req,res)=>{
       req.session.loggedIn  = true;
       // Render index.ejs with user data
       res.redirect("/home");
-      // res.render('index.ejs', { session: req.session });
-      // res.render('index.ejs', { userData: req.session.userData });
 })
 
 
@@ -485,12 +469,7 @@ app.get("/signup",(req,res)=>{
 app.get("/employer-dashboard",(req,res)=>{
   res.render('employerDashboard.ejs',{session:req.session});
 })
-// app.get("/login",(req,res)=>{
 
-//   res.render('login.ejs',);
-// })
-// Start the server
-// const PORT = process.env.PORT || 8000;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(8000,()=>{
+console.log("Listening to port http://localhost:8000/login");
+});
