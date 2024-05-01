@@ -345,9 +345,7 @@ output {
                      </form>
                      <div id="successMessage">Account Updated Successfully!</div>
                    `;
-                   // Client-side JavaScript
-// Client-side JavaScript
-// Client-side JavaScript
+                  
 document.getElementById('account-form').addEventListener('submit', function(event) {
   event.preventDefault();
   const formData = new FormData(this);
@@ -374,12 +372,6 @@ document.getElementById('account-form').addEventListener('submit', function(even
 
 
 
-// document.getElementById('salary').addEventListener('input', function() {
-//   var value = this.value;
-//   var output = document.getElementById('salaryValue');
-//   console.log('$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-//   output.innerHTML = '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-// });
 
       document.getElementById('account-form').onsubmit = updateAccount;
       break;
@@ -538,36 +530,10 @@ async function displayJobs() {
 }
 
 
-// Function to update account details
-function updateAccount(event) {
-  event.preventDefault();
-  // Gather form data and send update request to server
-  // ...
-}
 
-// Function to post a new job
-function postJob(event) {
-  event.preventDefault();
-  // Gather form data and send post request to server
-  // ...
-}
 
-// Function to load and display jobs for management
-function loadJobs() {
-  // Fetch jobs from server and display them
-  // ...
-}
 
-        // function showContent(option) {
-        //     var mainContent = document.getElementById("main-content");
-        //     if (option === 'account') {
-        //         mainContent.innerHTML = '<h2>Account Management</h2><p>Here you can manage your account details.</p>';
-        //     } else if (option === 'post') {
-        //         mainContent.innerHTML = '<h2>Post a Job</h2><p>Here you can post a new job opening.</p>';
-        //     } else if (option === 'manage') {
-        //         mainContent.innerHTML = '<h2>Manage Jobs</h2><p>Here you can manage your job postings.</p>';
-        //     }
-        // }
+
     </script>
 </body>
 </html>
