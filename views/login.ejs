@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apis.google.com 'nonce-c+ZdXVJCjAcUmnPSsGE6Fw=='"> -->
-    <!-- <meta name="google-signin-client_id" content="696854257015-3luv6kf93ov5g3ak20a7jsi15idsfgtg.apps.googleusercontent.com"> -->
     <title>Career Spark | Login Now</title>
     <base href="/signupAndLogin_img/">
     <link rel="shortcut icon" href="cslogo5.png" type="image/x-icon">
@@ -160,19 +158,8 @@
             
             
             function onSignIn(response) {
-//                 const id_token = googleUser.getAuthResponse().id_token;
-//   fetch('/login', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({ id_token, googleSignIn: true })
-//   })
-//   .then(response => {
-//     if (response.redirected) {
-//       window.location.href = response.url; // Redirect to the redirected URL (e.g., "/home")
-//     }
-//   });
+                 const id_token = googleUser.getAuthResponse().id_token;
+
             }
             </script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -181,24 +168,4 @@
 
 
 
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sign-In Migration</title>
-</head>
-<body>
- 
-
-<script>
-    // Handle sign-in response
-
-
-    </script>
-</body>
-</html> -->
 
