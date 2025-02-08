@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-// const dbUrl = 'mongodb+srv://harshkhatri682:z7L7PrhHoJT8Cb2H@job-board.layuqym.mongodb.net/';
+
 mongoose.connect(dbUrl, {
 }).then(() => {
   console.log("Db Connected Successfully");
