@@ -1,98 +1,107 @@
-CLONE The REPO
+# JobBoard
+
+A comprehensive job board platform with user authentication via Google OAuth.
+
+## 🚀 Quick Start
+
+```bash
+# Clone the repository
 git clone https://github.com/Harshkhatri02/JobBoard.git
 
+# Navigate to project directory
+cd JobBoard
 
-Install all the required packages automatically for the project
-npm install 
+# Install dependencies
+npm install
 
-📁 Environment Variables (.env)
-This project uses environment variables for secure configuration. Create a .env file in the root of the project and add the following keys:
-
-SESSION_SECRET_KEY=your_secret_session_key
-
-
-🔧 Steps to Get Google OAuth Credentials for Passport.js
-✅ 1. Go to Google Cloud Console
-Link: https://console.cloud.google.com/
-
-Sign in with your Google account.
-
-✅ 2. Create a New Project
-Click the project dropdown (top left) → New Project.
-
-Give it a name like JobBoard OAuth App and click Create.
-
-Select the project once created.
-
-✅ 3. Enable the Google+ API or People API
-(People API is recommended as Google+ is deprecated)
-
-In the left menu, go to "APIs & Services" → "Library".
-
-Search for People API and click Enable.
-
-✅ 4. Configure OAuth Consent Screen
-Go to "APIs & Services" → "OAuth consent screen".
-
-Select External (for public users) → Click Create.
-
-Fill in:
-
-App name
-
-User support email
-
-Developer contact info
-
-Click Save and Continue (you can skip scopes and test users for now if not publishing).
-
-✅ 5. Create OAuth Client ID
-Go to "APIs & Services" → "Credentials".
-
-Click Create Credentials → Select OAuth Client ID.
-
-Choose Web application.
-
-Name it something like Web OAuth for JobBoard.
-
-✅ 6. Add Authorized Redirect URI
-Under "Authorized redirect URIs", add the following:
-
-http://localhost:3000/auth/google/callback
-(Update this later for production deployment)
-
-Click Create.
-
-✅ 7. Copy Client ID and Secret
-Once created, copy:
-
-Client ID
-
-Client Secret
-
-
-✅ 8. Add to .env File
-Inside your project folder, create or update .env like this:
-CLIENT_ID=your_client_id
-CLIENT_SECRET=your_client_secret
------> DEMO URL:
-CLIENT_URL="http://localhost:8000/auth/google/callback"
-
-DB_CONNECT=your_mongodb_connection_string
-
-🔒 Notes for You'all:
-Never share your .env file or push it to GitHub. It should be listed in .gitignore.
-
-These values are accessed in code using process.env.KEY_NAME via the dotenv package.
-
-🛠 Setup:
-Make sure to install dotenv if not already:
-
-npm install dotenv
-
-And require it at the top of your app.js:
-require("dotenv").config();
-
-
-And finally, Run App:
+# Start the application
 node app
+```
+
+## 🔐 Environment Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
+```
+SESSION_SECRET_KEY=your_secret_session_key
+CLIENT_ID=your_google_oauth_client_id
+CLIENT_SECRET=your_google_oauth_client_secret
+CLIENT_URL=http://localhost:8000/auth/google/callback
+DB_CONNECT=your_mongodb_connection_string
+```
+
+## 🔑 Google OAuth Setup Guide
+
+### 1. Access Google Cloud Console
+- Visit [Google Cloud Console](https://console.cloud.google.com/)
+- Sign in with your Google account
+
+### 2. Create New Project
+- Click the project dropdown (top left) → New Project
+- Name it (e.g., "JobBoard OAuth App") and click Create
+- Select the newly created project
+
+### 3. Enable Required API
+- Navigate to "APIs & Services" → "Library"
+- Search for "People API" and enable it
+
+### 4. Configure OAuth Consent Screen
+- Go to "APIs & Services" → "OAuth consent screen"
+- Select "External" (for public users) → Click Create
+- Fill in required fields:
+  - App name
+  - User support email
+  - Developer contact information
+- Click Save and Continue
+
+### 5. Create OAuth Client ID
+- Go to "APIs & Services" → "Credentials"
+- Click Create Credentials → OAuth Client ID
+- Select "Web application"
+- Provide a suitable name
+
+### 6. Add Redirect URI
+- Under "Authorized redirect URIs", add:
+  ```
+  http://localhost:8000/auth/google/callback
+  ```
+- Click Create
+
+### 7. Copy Credentials
+- After creation, copy the Client ID and Client Secret
+- Add these to your `.env` file
+
+## 📋 Project Structure
+
+```
+JobBoard/
+├── app.js          # Main application entry point
+├── routes/         # API and page routes
+├── models/         # Database models
+├── public/         # Static assets
+├── views/          # Frontend templates
+├── middleware/     # Custom middleware functions
+├── .env            # Environment variables (create this)
+└── package.json    # Project dependencies
+```
+
+## 🔧 Technologies Used
+
+- Node.js
+- Express.js
+- MongoDB
+- Passport.js (Google OAuth)
+- EJS/Handlebars (or your template engine)
+
+## 🛡️ Security Notes
+
+- Never commit your `.env` file to version control
+- Ensure `.env` is included in `.gitignore`
+- Rotate secrets regularly for production deployments
+
+## 🌐 Deployment
+
+For production deployment:
+1. Update the CLIENT_URL in your .env file
+2. Add the production callback URL to Google OAuth authorized URIs
+3. Configure your production database connection
