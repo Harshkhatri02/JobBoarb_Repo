@@ -224,7 +224,7 @@ app.post('/signup', async(req, res) => {
   res.render('index.ejs',{session:req.session});
 
 
-
+});
 //User Login
 app.post("/login",async(req,res)=>{
   const { email, password } = req.body;
